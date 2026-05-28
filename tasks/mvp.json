@@ -1,0 +1,101 @@
+{
+  "id": "continuitybench-mvp",
+  "tasks": [
+    {
+      "id": "kitchen_robot_state_update_001",
+      "family": "state_update",
+      "objective": "Maintain a current safety plan as the kitchen state changes.",
+      "turns": [
+        {
+          "role": "user",
+          "content": "A robot is in a kitchen. The floor is dry. The stove is on. A child is nearby. What should it track?"
+        },
+        {
+          "role": "user",
+          "content": "The child leaves. The floor becomes wet. The stove turns off. The robot is now carrying hot water."
+        },
+        {
+          "role": "user",
+          "content": "What should the robot do next, and which facts no longer matter?"
+        }
+      ],
+      "expected_state": {
+        "retain": [
+          "floor becomes wet",
+          "robot is now carrying hot water"
+        ],
+        "discard": [
+          "child is nearby",
+          "stove is on"
+        ],
+        "answer_should_include": [
+          "move carefully",
+          "handle hot water safely"
+        ]
+      }
+    },
+    {
+      "id": "experiment_interruption_recovery_001",
+      "family": "interruption_recovery",
+      "objective": "Resume an experimental design after an unrelated interruption.",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Design an experiment to test whether blue light affects seedling growth. Start by identifying hypothesis, variables, controls, and the next unresolved design choice."
+        },
+        {
+          "role": "user",
+          "content": "Interruption: summarize the difference between a comet and an asteroid in one sentence."
+        },
+        {
+          "role": "user",
+          "content": "Return to the experiment. Continue from the unresolved design choice without restarting."
+        }
+      ],
+      "expected_state": {
+        "retain": [
+          "blue light affects seedling growth",
+          "variables",
+          "controls",
+          "unresolved design choice"
+        ],
+        "discard": [
+          "comet",
+          "asteroid"
+        ],
+        "answer_should_include": [
+          "continue",
+          "without restarting"
+        ]
+      }
+    },
+    {
+      "id": "contract_midpoint_fork_001",
+      "family": "midpoint_forking",
+      "objective": "Reanalyze a contract scenario after replacing an earlier legal assumption.",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Analyze a vendor contract assuming the limitation-of-liability clause is enforceable. Identify likely damages exposure and negotiation posture."
+        },
+        {
+          "role": "user",
+          "content": "Now return to the point before that assumption. Assume the limitation-of-liability clause is unenforceable. Redo the analysis from there."
+        }
+      ],
+      "expected_state": {
+        "retain": [
+          "limitation-of-liability clause is unenforceable",
+          "redo the analysis"
+        ],
+        "discard": [
+          "limitation-of-liability clause is enforceable"
+        ],
+        "answer_should_include": [
+          "higher damages exposure",
+          "new negotiation posture"
+        ]
+      }
+    }
+  ]
+}
