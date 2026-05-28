@@ -96,6 +96,45 @@
           "new negotiation posture"
         ]
       }
+    },
+    {
+      "id": "immune_metabolic_subsolution_braiding_001",
+      "family": "subsolution_braiding",
+      "objective": "Preserve three partial findings and combine them into a unified mechanism.",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Subproblem A: A patient cohort shows elevated IL-6 after treatment but no fever. Save the important partial finding."
+        },
+        {
+          "role": "user",
+          "content": "Subproblem B: The same cohort shows reduced mitochondrial spare respiratory capacity. Save the important partial finding separately."
+        },
+        {
+          "role": "user",
+          "content": "Subproblem C: Symptoms improve when the treatment is paired with a mild AMPK activator. Save the important partial finding separately."
+        },
+        {
+          "role": "user",
+          "content": "Now braid the three partial findings into one plausible mechanism. Do not force unrelated details together."
+        }
+      ],
+      "expected_state": {
+        "retain": [
+          "elevated IL-6 after treatment",
+          "reduced mitochondrial spare respiratory capacity",
+          "symptoms improve",
+          "mild AMPK activator"
+        ],
+        "discard": [
+          "fever"
+        ],
+        "answer_should_include": [
+          "unified mechanism",
+          "inflammation",
+          "mitochondrial"
+        ]
+      }
     }
   ]
 }
