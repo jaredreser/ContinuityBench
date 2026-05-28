@@ -6,7 +6,7 @@ from typing import Any
 
 from .adapters import ModelAdapter
 from .schema import Suite, Task
-from .scoring import score_task
+from .scoring import score_task_report
 
 
 @dataclass
@@ -16,6 +16,7 @@ class TaskResult:
     adapter: str
     raw_response: str
     scores: dict[str, float]
+    details: dict[str, Any]
 
     def to_dict(self) -> dict[str, Any]:
         return {
@@ -23,6 +24,7 @@ class TaskResult:
             "family": self.family,
             "adapter": self.adapter,
             "scores": self.scores,
+            "details": self.details,
             "raw_response": self.raw_response,
         }
 
@@ -45,13 +47,14 @@ class SuiteReport:
 
 def run_task(task: Task, adapter: ModelAdapter) -> TaskResult:
     raw_response = adapter.complete(task, task.turns)
-    scores = score_task(task, raw_response)
+    report = score_task_report(task, raw_response)
     return TaskResult(
         task_id=task.id,
         family=task.family,
         adapter=adapter.name,
         raw_response=raw_response,
-        scores=scores,
+        scores=report["scores"],
+        details=report["details"],
     )
 
 
